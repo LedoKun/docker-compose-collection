@@ -1,0 +1,77 @@
+version: "3.9"
+services:
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:develop
+    container_name: prowlarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Bangkok
+    volumes:
+      - /var/srv/torrent/config/prowlarr:/config
+    ports:
+      - 9696:9696
+    restart: unless-stopped
+
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Bangkok
+    volumes:
+      - /var/srv/torrent/config/sonarr:/config
+      - /var/srv/torrent/share/TV:/tv
+      - /var/srv/torrent:/downloads
+    ports:
+      - 8989:8989
+    restart: unless-stopped
+
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Bangkok
+    volumes:
+      - /var/srv/torrent/config/radarr:/config
+      - /var/srv/torrent/share/Movies:/movies
+      - /var/srv/torrent:/downloads
+    ports:
+      - 7878:7878
+    restart: unless-stopped
+
+  bazarr:
+    image: lscr.io/linuxserver/bazarr:latest
+    container_name: bazarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Bangkok
+    volumes:
+      - /var/srv/torrent/config/bazarr:/config
+      - /var/srv/torrent/share/Movies:/movies
+      - /var/srv/torrent/share/TV:/tv
+      - /var/srv/torrent:/downloads
+    ports:
+      - 6767:6767
+    restart: unless-stopped
+
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Bangkok
+      - WEBUI_PORT=8080
+    volumes:
+      - /var/srv/torrent/config/qbittorrent:/config
+      - /var/srv/torrent:/downloads
+    ports:
+      - 8080:8080
+      - 56535:56535
+      - 56535:56535/udp
+    restart: unless-stopped
