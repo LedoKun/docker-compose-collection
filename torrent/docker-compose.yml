@@ -8,7 +8,7 @@ services:
       - PGID=1000
       - TZ=Asia/Bangkok
     volumes:
-      - /var/srv/torrent/config/prowlarr:/config
+      - /srv/torrent/config/prowlarr:/config
     ports:
       - 9696:9696
     restart: unless-stopped
@@ -21,9 +21,9 @@ services:
       - PGID=1000
       - TZ=Asia/Bangkok
     volumes:
-      - /var/srv/torrent/config/sonarr:/config
-      - /var/srv/torrent/share/TV:/tv
-      - /var/srv/torrent:/downloads
+      - /srv/torrent/config/sonarr:/config
+      - /srv/torrent/share/TV:/tv
+      - /srv/torrent:/downloads
     ports:
       - 8989:8989
     restart: unless-stopped
@@ -36,9 +36,9 @@ services:
       - PGID=1000
       - TZ=Asia/Bangkok
     volumes:
-      - /var/srv/torrent/config/radarr:/config
-      - /var/srv/torrent/share/Movies:/movies
-      - /var/srv/torrent:/downloads
+      - /srv/torrent/config/radarr:/config
+      - /srv/torrent/share/Movies:/movies
+      - /srv/torrent:/downloads
     ports:
       - 7878:7878
     restart: unless-stopped
@@ -51,10 +51,10 @@ services:
       - PGID=1000
       - TZ=Asia/Bangkok
     volumes:
-      - /var/srv/torrent/config/bazarr:/config
-      - /var/srv/torrent/share/Movies:/movies
-      - /var/srv/torrent/share/TV:/tv
-      - /var/srv/torrent:/downloads
+      - /srv/torrent/config/bazarr:/config
+      - /srv/torrent/share/Movies:/movies
+      - /srv/torrent/share/TV:/tv
+      - /srv/torrent:/downloads
     ports:
       - 6767:6767
     restart: unless-stopped
@@ -66,12 +66,12 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Asia/Bangkok
-      - WEBUI_PORT=8080
+      - WEBUI_PORT=8085
     volumes:
-      - /var/srv/torrent/config/qbittorrent:/config
-      - /var/srv/torrent:/downloads
+      - /srv/torrent/config/qbittorrent:/config
+      - /srv/torrent:/downloads
     ports:
-      - 8080:8080
+      - 8085:8085
       - 56535:56535
       - 56535:56535/udp
     restart: unless-stopped
