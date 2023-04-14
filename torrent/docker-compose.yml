@@ -76,14 +76,24 @@ services:
       - 56535:56535/udp
     restart: unless-stopped
 
-  dim:
-    image: ghcr.io/dusk-labs/dim:dev
-    container_name: dim
-    ports:
-      - 8000:8000/tcp
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin:latest
+    container_name: jellyfin
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Bangkok
+      - JELLYFIN_PublishedServerUrl=192.168.50.15
     volumes:
-      - /srv/torrent/config/dim:/opt/dim/config
-      - /srv/torrent:/media
+      - /srv/torrent/config/jellyfin:/config
+      - /srv/torrent/share/TV:/data/tvshows
+      - /srv/torrent/share/Anime:/data/anime
+      - /srv/torrent/share/Movies:/data/movies
+    ports:
+      - 8096:8096
+      - 8920:8920
+      - 7359:7359/udp
+      - 1900:1900/udp
     devices:
-      - /dev/dri/renderD128:/dev/dri/renderD128
+      - /dev/dri:/dev/dri
     restart: unless-stopped
