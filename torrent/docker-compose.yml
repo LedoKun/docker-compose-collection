@@ -75,3 +75,15 @@ services:
       - 56535:56535
       - 56535:56535/udp
     restart: unless-stopped
+
+  dim:
+    image: ghcr.io/dusk-labs/dim:dev
+    container_name: dim
+    ports:
+      - 8000:8000/tcp
+    volumes:
+      - /srv/torrent/config/dim:/opt/dim/config
+      - /srv/torrent:/media
+    devices:
+      - /dev/dri/renderD128:/dev/dri/renderD128
+    restart: unless-stopped
