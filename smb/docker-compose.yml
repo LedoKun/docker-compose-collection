@@ -1,0 +1,25 @@
+version: "3.9"
+services:
+  samba:
+    image: dperson/samba:latest
+    container_name: samba
+    volumes:
+      - /run/samba:/run/samba
+      - /var/cache/samba:/var/cache/samba
+      - /var/lib/samba:/var/lib/samba
+      - /etc:/etc
+      - /var/log/samba:/var/log/samba
+      - /srv/cctv:/srv/cctv
+      - /srv/torrent/share:/srv/torrent/share
+    environment:
+      - TZ=Asia/Bangkok
+      - USERID=1000
+      - GROUPID=1000
+      - NMBD=True
+      - RECYCLE=False
+      - SHARE='cctv;/srv/cctv;no;no;yes;all;none;;CCTV Share'
+      - SHARE2='media;/srv/torrent/share;yes;no;yes;all;none;;Media Share'
+      - SMB=False
+      - WORKGROUP=WORKGROUP
+    network_mode: "host"
+    restart: unless-stopped
