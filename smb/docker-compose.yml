@@ -21,5 +21,5 @@ services:
       - SHARE2=media;/srv/torrent/share;yes;no;yes;all;none;;Media Share
       - SMB=False
       - WORKGROUP=WORKGROUP
-    network_mode: "host"
+    network_mode: host
     restart: unless-stopped
