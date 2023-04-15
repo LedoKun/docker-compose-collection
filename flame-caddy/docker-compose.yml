@@ -10,9 +10,9 @@ services:
     ports:
       - 5005:5005
     secrets:
-      - flamepassword
+      - password
     environment:
-      - PASSWORD_FILE=/run/secrets/flamepassword
+      - PASSWORD_FILE=/run/secrets/password
     restart: unless-stopped
 
   caddy:
@@ -28,5 +28,5 @@ services:
     restart: unless-stopped
 
 secrets:
-  flamepassword:
-    file: /opt/flame/flamepassword
+  password:
+    file: /opt/flame/password
