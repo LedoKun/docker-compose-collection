@@ -16,8 +16,9 @@ services:
     restart: unless-stopped
 
   caddy:
-    build: ./caddy
-    pull_policy: build
+    image: caddy:alpine
+    # build: ./caddy
+    # pull_policy: build
     container_name: caddy
     volumes:
       - /opt/caddy/config:/config
