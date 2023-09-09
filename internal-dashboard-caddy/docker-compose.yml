@@ -1,0 +1,41 @@
+version: "3.9"
+services:
+
+  # flame:
+  #   image: pawelmalak/flame:latest
+  #   container_name: flame
+  #   volumes:
+  #     - /opt/flame/config:/app/data
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #   ports:
+  #     - 5005:5005
+  #   secrets:
+  #     - password
+  #   environment:
+  #     - PASSWORD_FILE=/run/secrets/password
+  #   restart: unless-stopped
+
+  homer:
+    image: b4bz/homer:latest
+    volumes:
+      - /srv/homer/assets:/www/assets
+    ports:
+      - 8080:8080
+    restart: unless-stopped
+ 
+  caddy:
+    image: caddy:alpine
+    # build: ./caddy
+    # pull_policy: build
+    container_name: caddy
+    volumes:
+      - /opt/caddy/config:/config
+      - /opt/caddy/data:/data
+      - /opt/caddy/Caddyfile:/etc/caddy/Caddyfile
+      - /var/log/caddy:/var/log/caddy
+    network_mode: host
+    restart: unless-stopped
+
+# secrets:
+#   password:
+#     file: /opt/flame/password
