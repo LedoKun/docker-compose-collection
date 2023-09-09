@@ -21,13 +21,14 @@ services:
       - /srv/homer/assets:/www/assets
     ports:
       - 8080:8080
+    environment:
+      - INIT_ASSETS=1
     restart: unless-stopped
  
   caddy:
     image: caddy:alpine
     # build: ./caddy
     # pull_policy: build
-    container_name: caddy
     volumes:
       - /opt/caddy/config:/config
       - /opt/caddy/data:/data
