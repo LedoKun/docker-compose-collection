@@ -20,9 +20,13 @@ services:
     volumes:
       - /srv/homer/assets:/www/assets
     ports:
-      - 8080:8080
+      - 8081:8081
     environment:
       - INIT_ASSETS=1
+      - PORT=8081
+      - SUBFOLDER=/homer
+      - PUID=1000
+      - PGID=1000
     restart: unless-stopped
  
   caddy:
