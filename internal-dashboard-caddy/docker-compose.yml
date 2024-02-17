@@ -39,6 +39,8 @@ services:
       - /opt/caddy/Caddyfile:/etc/caddy/Caddyfile
       - /var/log/caddy:/var/log/caddy
     network_mode: host
+    dns:
+      - 100.100.100.100
     restart: unless-stopped
 
 # secrets:
