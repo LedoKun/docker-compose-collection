@@ -2,7 +2,7 @@ version: "3.9"
 services:
   samba:
     image: dperson/samba:latest
-    container_name: samba
+    # container_name: samba
     volumes:
       - /run/samba:/run/samba
       - /var/cache/samba:/var/cache/samba
@@ -17,8 +17,8 @@ services:
       - GROUPID=1000
       - NMBD=True
       - RECYCLE=False
-      - SHARE=cctv;/srv/cctv;no;no;yes;all;none;;CCTV Share
-      - SHARE2=media;/srv/torrent/share;yes;no;yes;all;none;;Media Share
+      - SHARE=media;/srv/torrent/share;yes;no;yes;all;none;;Media Share
+      # - SHARE2=cctv;/srv/cctv;no;no;yes;all;none;;CCTV Share
       - SMB=False
       - WORKGROUP=WORKGROUP
     network_mode: host
