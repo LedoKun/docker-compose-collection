@@ -109,3 +109,17 @@ services:
     ports:
       - ${FILEBROWSER_PORT}:80
     restart: ${RESTART}
+
+  audiobookshelf:
+    image: ghcr.io/advplyr/audiobookshelf:latest
+    user: ${PUID}:${PGID}
+    environment:
+      - TZ=${TZ}
+    volumes:
+      - ${MEDIA_ROOT}/Audiobooks:/audiobooks
+      - ${MEDIA_ROOT}/Podcasts:/podcasts
+      - ${CONFIG_ROOT}/audiobookshelf/config:/config
+      - ${CONFIG_ROOT}/audiobookshelf/metadata:/metadata
+    ports:
+      - ${AUDIOBOOKSHELF_PORT}:80
+    restart: ${RESTART}
