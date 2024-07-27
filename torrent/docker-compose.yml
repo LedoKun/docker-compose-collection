@@ -123,3 +123,18 @@ services:
     ports:
       - ${AUDIOBOOKSHELF_PORT}:80
     restart: ${RESTART}
+
+  readarr:
+    image: lscr.io/linuxserver/readarr:develop
+    container_name: readarr
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ${CONFIG_ROOT}/readarr:/config
+      - ${DOWNLOAD_ROOT}:/downloads
+      - ${MEDIA_ROOT}/Books:/books
+    ports:
+      - ${READARR_PORT}:8787
+    restart: ${RESTART}
