@@ -1,102 +1,111 @@
 version: "3.9"
+
 services:
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:develop
-    # container_name: prowlarr
     environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Asia/Bangkok
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
     volumes:
-      - /srv/torrent/config/prowlarr:/config
+      - ${CONFIG_ROOT}/prowlarr:/config
     ports:
-      - 9696:9696
-    restart: unless-stopped
+      - ${PROWLARR_PORT}:9696
+    restart: ${RESTART}
 
   sonarr:
     image: lscr.io/linuxserver/sonarr:latest
-    # container_name: sonarr
     environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Asia/Bangkok
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
     volumes:
-      - /srv/torrent/config/sonarr:/config
-      - /srv/torrent/share/TV:/tv
-      - /srv/torrent:/downloads
+      - ${CONFIG_ROOT}/sonarr:/config
+      - ${MEDIA_ROOT}/TV:/tv
+      - ${DOWNLOAD_ROOT}:/downloads
     ports:
-      - 8989:8989
-    restart: unless-stopped
+      - ${SONARR_PORT}:8989
+    restart: ${RESTART}
 
   radarr:
     image: lscr.io/linuxserver/radarr:latest
-    # container_name: radarr
     environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Asia/Bangkok
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
     volumes:
-      - /srv/torrent/config/radarr:/config
-      - /srv/torrent/share/Movies:/movies
-      - /srv/torrent:/downloads
+      - ${CONFIG_ROOT}/radarr:/config
+      - ${MEDIA_ROOT}/Movies:/movies
+      - ${DOWNLOAD_ROOT}:/downloads
     ports:
-      - 7878:7878
-    restart: unless-stopped
+      - ${RADARR_PORT}:7878
+    restart: ${RESTART}
 
   bazarr:
     image: lscr.io/linuxserver/bazarr:latest
-    # container_name: bazarr
     environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Asia/Bangkok
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
     volumes:
-      - /srv/torrent/config/bazarr:/config
-      - /srv/torrent/share/Movies:/movies
-      - /srv/torrent/share/TV:/tv
-      - /srv/torrent:/downloads
+      - ${CONFIG_ROOT}/bazarr:/config
+      - ${MEDIA_ROOT}/Movies:/movies
+      - ${MEDIA_ROOT}/TV:/tv
+      - ${DOWNLOAD_ROOT}:/downloads
     ports:
-      - 6767:6767
-    restart: unless-stopped
+      - ${BAZARR_PORT}:6767
+    restart: ${RESTART}
 
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent:latest
-    # container_name: qbittorrent
     environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Asia/Bangkok
-      - WEBUI_PORT=8085
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - WEBUI_PORT=${QBITTORRENT_WEBUI_PORT}
     volumes:
-      - /srv/torrent/config/qbittorrent:/config
-      - /srv/torrent:/downloads
+      - ${CONFIG_ROOT}/qbittorrent:/config
+      - ${DOWNLOAD_ROOT}:/downloads
     ports:
-      - 8085:8085
-      - 56535:56535
-      - 56535:56535/udp
-    restart: unless-stopped
+      - ${QBITTORRENT_WEBUI_PORT}:${QBITTORRENT_WEBUI_PORT}
+      - ${QBITTORRENT_PORT}:${QBITTORRENT_PORT}
+      - ${QBITTORRENT_PORT}:${QBITTORRENT_PORT}/udp
+    restart: ${RESTART}
 
   jellyfin:
     image: lscr.io/linuxserver/jellyfin:latest
-    # container_name: jellyfin
     group_add:
-      - "105"
+      - ${JELLYFIN_RENDER_GROUP}
     environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Asia/Bangkok
-      - JELLYFIN_PublishedServerUrl=192.168.50.20
-      - DOCKER_MODS=linuxserver/mods:jellyfin-opencl-intel
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - JELLYFIN_PublishedServerUrl=${JELLYFIN_IP}
+      - DOCKER_MODS=${JELLYFIN_DOCKER_MODS}
     volumes:
-      - /srv/torrent/config/jellyfin:/config
-      - /srv/torrent/share/TV:/data/tvshows
-      - /srv/torrent/share/Anime:/data/anime
-      - /srv/torrent/share/Movies:/data/movies
+      - ${CONFIG_ROOT}/jellyfin:/config
+      - ${MEDIA_ROOT}/TV:/data/tvshows
+      - ${MEDIA_ROOT}/Anime:/data/anime
+      - ${MEDIA_ROOT}/Movies:/data/movies
     ports:
-      - 8096:8096
+      - ${JELLYFIN_PORT}:8096
       - 8920:8920
       - 7359:7359/udp
       - 1900:1900/udp
     devices:
       - /dev/dri:/dev/dri
-    restart: unless-stopped
+    restart: ${RESTART}
+
+  filebrowser:
+    image: filebrowser/filebrowser:s6
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ${CONFIG_ROOT}/filebrowser/config:/config
+      - ${CONFIG_ROOT}/filebrowser/database:/database
+      - ${DOWNLOAD_ROOT}:/srv
+    ports:
+      - ${FILEBROWSER_PORT}:80
+    restart: ${RESTART}
