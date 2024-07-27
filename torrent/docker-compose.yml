@@ -86,6 +86,7 @@ services:
       - PGID=1000
       - TZ=Asia/Bangkok
       - JELLYFIN_PublishedServerUrl=192.168.50.20
+      - DOCKER_MODS=linuxserver/mods:jellyfin-opencl-intel
     volumes:
       - /srv/torrent/config/jellyfin:/config
       - /srv/torrent/share/TV:/data/tvshows
