@@ -79,6 +79,8 @@ services:
   jellyfin:
     image: lscr.io/linuxserver/jellyfin:latest
     # container_name: jellyfin
+    group_add:
+      - "105"
     environment:
       - PUID=1000
       - PGID=1000
