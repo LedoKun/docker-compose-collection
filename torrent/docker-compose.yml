@@ -126,7 +126,6 @@ services:
 
   readarr:
     image: lscr.io/linuxserver/readarr:develop
-    container_name: readarr
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
