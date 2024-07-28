@@ -27,7 +27,7 @@ This repository contains the configuration files for a self-hosted media server 
 ``
 git clone https://github.com/LedoKun/docker-compose-collection.git
 cd docker-compose-collection
-''
+``
 
 2. Copy the example environment file and modify it according to your needs:
 
