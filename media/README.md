@@ -24,16 +24,16 @@ This repository contains the configuration files for a self-hosted media server 
 
 1. Clone this repository:
 
-``
+```bash:
 git clone https://github.com/LedoKun/docker-compose-collection.git
 cd docker-compose-collection
-``
+```
 
 2. Copy the example environment file and modify it according to your needs:
 
-``
+```bash:
 cp env.example .env
-``
+```
 
 Edit the `.env` file to set your desired paths, ports, and other configurations.
 
@@ -41,9 +41,9 @@ Edit the `.env` file to set your desired paths, ports, and other configurations.
 
 4. Start the services:
 
-``
+```bash:
 docker-compose up -d
-``
+```
 
 ## Configuration
 
